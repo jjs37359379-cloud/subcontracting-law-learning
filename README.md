@@ -89,6 +89,13 @@ npm.cmd run mail:test
 
 계정의 일반 로그인 비밀번호 대신 회사가 발급한 SMTP 토큰 또는 앱 비밀번호를 사용하세요. `.env.example`은 항목 안내용이며 실제 비밀값을 파일이나 저장소에 커밋하면 안 됩니다.
 
+### Gmail 자동 발송을 켜기 위해 사용자가 한 번 할 일
+
+1. 발신 Google 계정에서 2단계 인증을 켜고 `https://myaccount.google.com/apppasswords`에서 앱 비밀번호를 만듭니다.
+2. 프로젝트 폴더의 PowerShell에서 `powershell -ExecutionPolicy Bypass -File .\scripts\set-gmail-secret.ps1`을 실행하고 16자리 앱 비밀번호를 숨김 입력합니다.
+
+앱 비밀번호는 파일이나 채팅에 저장하지 않고 GitHub Actions의 암호화된 `SMTP_PASS` Secret으로 바로 등록됩니다.
+
 ## 링크 배포와 저장된 HTML
 
 `index.html`을 PC에 복사해 둔 파일은 자동으로 새 파일로 교체되지 않습니다. 모든 사용자가 항상 최신 수업·PDF를 보게 하려면 GitHub Pages 같은 한 곳에 이 프로젝트를 배포하고 고정 링크를 공유해야 합니다.
