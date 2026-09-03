@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="소비재 회사 신입 구매담당자를 위한 하도급법 실무 학습센터">
+  <title>바른구매 | 하도급법 학습센터</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="바른구매 홈">
+      <span class="brand-mark" aria-hidden="true">바</span>
+      <span><strong>바른구매</strong><small>하도급법 학습센터</small></span>
+    </a>
+    <nav class="main-nav" aria-label="주 메뉴">
+      <button class="nav-item active" data-view="learn">학습센터</button>
+      <button class="nav-item" data-view="cases">위반사례</button>
+      <button class="nav-item" data-view="quiz">실전퀴즈 <span class="nav-count">15</span></button>
+      <button class="nav-item" data-view="updates">법령업데이트 <span class="update-dot" id="updateDot" hidden></span></button>
+    </nav>
+    <button class="download-button" id="downloadPdf" type="button" aria-label="교육자료 PDF 다운로드">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14"/></svg>
+      교육자료 PDF
+    </button>
+  </header>
+
+  <aside class="local-copy-notice" id="localCopyNotice" hidden>
+    <strong>저장된 파일로 열었습니다.</strong>
+    <span>HTML 복사본 자체는 자동 교체되지 않습니다. 법령 데이터는 배포 주소가 연결되면 최신본을 다시 확인합니다.</span>
+    <a id="canonicalSiteLink" href="#" hidden>최신 학습사이트 열기 →</a>
+  </aside>
+
+  <main id="main">
+    <section class="view active" id="learn-view" aria-labelledby="learn-title">
+      <div class="hero-wrap">
+        <div class="eyebrow"><span></span> NEW BUYER ONBOARDING · 2026</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1 id="learn-title">좋은 구매의 시작은<br><em>공정한 약속</em>입니다.</h1>
+            <p>소비재 회사 구매담당자가 발주부터 대금 지급까지 반드시 알아야 할 하도급법을 실제 업무 순서대로 배워보세요.</p>
+            <div class="hero-actions">
+              <button class="primary-button" id="startLearning">첫 수업 시작하기 <span>→</span></button>
+              <span class="course-meta"><strong>7</strong>개 핵심 수업 · 약 <strong>45</strong>분</span>
+            </div>
+          </div>
+          <aside class="hero-card" aria-label="오늘의 핵심 원칙">
+            <div class="hero-card-top"><span>TODAY'S RULE</span><b>01</b></div>
+            <p>“먼저 시키고<br>계약서는 나중에”</p>
+            <strong>가장 흔한 실수는<br>이 한 문장에서 시작됩니다.</strong>
+            <div class="rule-answer"><span>정답</span> 작업 시작 전 서면 발급</div>
+          </aside>
+        </div>
+      </div>
+
+      <section class="latest-training-update" id="latestTrainingUpdate" aria-labelledby="latest-training-title"></section>
+
+      <section class="status-section" aria-label="학습 현황">
+        <div>
+          <span class="section-kicker">MY LEARNING</span>
+          <h2>나의 학습 현황</h2>
+        </div>
+        <div class="progress-panel">
+          <div class="progress-ring" id="progressRing"><span id="progressPercent">0%</span></div>
+          <div><strong id="progressMessage">첫 수업을 시작해보세요</strong><small id="progressDetail">0 / 7 수업 완료</small></div>
+          <button class="text-button" id="continueLearning">이어 학습하기 →</button>
+        </div>
+      </section>
+
+      <section class="rules-section" id="rules-map">
+        <div class="section-heading">
+          <div><span class="section-kicker">COMPLIANCE MAP</span><h2>의무는 먼저, 금지는 끝까지</h2></div>
+          <p>예전 교육자료의 ‘9대 의무·10대 금지’를 현재 법 기준에 맞춰 다시 정리했습니다.</p>
+        </div>
+        <div class="rules-intro">
+          <strong>9 + 1</strong><p>전통적으로 외우는 9대 의무에<br><b>하도급대금 연동계약 의무</b>를 함께 봅니다.</p>
+          <strong>13</strong><p>법 개정으로 추가·세분화된 내용을 반영한<br><b>현재의 핵심 금지행위</b>입니다.</p>
+        </div>
+        <div class="rules-columns">
+          <article class="rule-list-card duty-card">
+            <header><span>해야 합니다</span><h3>원사업자의 9대 의무</h3></header>
+            <ol id="dutyList"></ol>
+            <div class="rule-update"><b>+ 현재의 추가 핵심</b><span>하도급대금 연동계약 체결·이행</span></div>
+          </article>
+          <article class="rule-list-card ban-card">
+            <header><span>하면 안 됩니다</span><h3>13개 핵심 금지행위</h3></header>
+            <ol id="banList"></ol>
+          </article>
+        </div>
+        <p class="classification-note">※ ‘9대·10대’는 법률의 공식 장 제목이 아니라 실무 교육상 묶음입니다. 현재는 부당특약·경제적 이익 요구·기술자료 관련 금지 등이 추가·세분화되어 13개 핵심 유형으로 보는 것이 안전합니다.</p>
+      </section>
+
+      <section class="curriculum-section" id="curriculum">
+        <div class="section-heading">
+          <div><span class="section-kicker">CURRICULUM</span><h2>구매 업무의 순서대로 배우세요</h2></div>
+          <p>개념을 외우기보다 “이 상황에서 나는 무엇을 해야 하는가”를 익히는 과정입니다.</p>
+        </div>
+        <div class="lesson-grid" id="lessonGrid"></div>
+      </section>
+
+      <section class="field-note">
+        <div class="field-note-label">FIELD NOTE</div>
+        <div>
+          <span class="section-kicker light">5초 셀프 체크</span>
+          <h2>발주 버튼을 누르기 전,<br>이 세 가지만 확인하세요.</h2>
+        </div>
+        <ol>
+          <li><span>01</span><p><strong>이 거래는 하도급인가?</strong>우리 회사의 업과 위탁 유형, 당사자 규모를 확인합니다.</p></li>
+          <li><span>02</span><p><strong>필수 조건을 적었는가?</strong>목적물·납기·장소·대금·지급방법을 확정합니다.</p></li>
+          <li><span>03</span><p><strong>착수 전에 발급했는가?</strong>서명된 계약서나 적법한 전자서면을 먼저 전달합니다.</p></li>
+        </ol>
+      </section>
+    </section>
+
+    <section class="view" id="cases-view" aria-labelledby="cases-title">
+      <div class="page-hero compact">
+        <span class="section-kicker">CASE LIBRARY</span>
+        <h1 id="cases-title">실제 사건에서 배우는<br>구매담당자의 위험 신호</h1>
+        <p>공정거래위원회가 실제로 제재한 사건을 구매 업무의 언어로 다시 정리했습니다.</p>
+      </div>
+      <div class="case-toolbar">
+        <div class="case-filter-stack">
+          <div class="case-filters" id="caseFilters" aria-label="사례 유형 필터"></div>
+          <label class="year-filter">공개연도 <select id="caseYear" aria-label="사례 공개연도"><option value="전체">전체</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select></label>
+        </div>
+        <label class="search-box"><span aria-hidden="true">⌕</span><input id="caseSearch" type="search" placeholder="회사명, 위반유형 검색" aria-label="사례 검색"></label>
+      </div>
+      <div class="case-summary"><strong id="caseCount">0</strong>개의 공식 공개사례 <span>·</span> 2023.09.03.~2026.09.03. <span>·</span> 카드의 ‘공식자료’를 누르면 공정위 원문으로 이동합니다.</div>
+      <div class="case-grid" id="caseGrid"></div>
+      <div class="source-note">
+        <strong>자료 이용 안내</strong>
+        <p>사건 내용과 조치는 공정거래위원회 보도자료 및 의결서를 교육 목적으로 요약했습니다. 당시 적용 법령과 현재 법령은 다를 수 있으므로 구체적 사안에는 최신 법령과 회사 법무 검토를 적용하세요.</p>
+      </div>
+    </section>
+
+    <section class="view" id="quiz-view" aria-labelledby="quiz-title">
+      <div class="quiz-shell">
+        <header class="quiz-header">
+          <div><span class="section-kicker">PRACTICE TEST</span><h1 id="quiz-title">내가 구매담당자라면?</h1><p>소비재 구매 현장에서 마주칠 법한 15가지 상황입니다.</p></div>
+          <div class="quiz-score-card"><small>현재 답변</small><strong><span id="answeredCount">0</span> / 15</strong></div>
+        </header>
+        <div class="quiz-progress"><span id="quizProgressBar"></span></div>
+        <form id="quizForm">
+          <div id="quizQuestions"></div>
+          <div class="quiz-submit-wrap">
+            <p>모든 문항에 답한 뒤 결과를 확인하세요.</p>
+            <button class="primary-button" id="submitQuiz" type="submit">채점 결과 보기 <span>→</span></button>
+          </div>
+        </form>
+        <section class="quiz-result" id="quizResult" hidden aria-live="polite"></section>
+      </div>
+    </section>
+
+    <section class="view" id="updates-view" aria-labelledby="updates-title">
+      <div class="page-hero compact update-hero">
+        <span class="section-kicker">LAW WATCH</span>
+        <h1 id="updates-title">최신 법령 상태와<br>변경 감지 이력</h1>
+        <p>국가법령정보센터 공동활용 API를 기준으로 감지한 결과입니다. 자동 요약은 검토 신호이며, 실제 업무에는 원문과 시행일을 확인하세요.</p>
+      </div>
+      <div class="update-shell">
+        <section class="monitor-status" aria-labelledby="monitor-title">
+          <div><span class="section-kicker">MONITOR STATUS</span><h2 id="monitor-title">감시 중인 법령</h2></div>
+          <p id="lawCheckedAt">아직 자동 점검 기록이 없습니다.</p>
+          <div class="tracked-law-grid" id="trackedLawGrid"></div>
+        </section>
+        <section class="change-history" aria-labelledby="history-title">
+          <div class="section-heading"><div><span class="section-kicker">LATEST 3 CHANGES</span><h2 id="history-title">최근 3회 변경 이력</h2></div><a class="official-law-button" href="https://www.law.go.kr/법령/하도급거래공정화에관한법률" target="_blank" rel="noopener noreferrer">현행 법령 전체 보기 ↗</a></div>
+          <div id="lawChangeList"></div>
+        </section>
+        <aside class="automation-note"><strong>자동화 운영 원칙</strong><p>최초 실행은 현재 법령을 기준선으로만 저장합니다. 이후 법령 본문이나 공포·시행 정보가 달라진 경우에만 이 페이지의 이력 파일을 갱신하고, 설정된 수신자에게 원문 링크가 포함된 알림 메일을 보냅니다.</p></aside>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="lesson-dialog" id="lessonDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-header"><span id="dialogNumber">LESSON 01</span><button id="closeDialog" aria-label="닫기">×</button></div>
+    <div class="dialog-body" id="dialogBody"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    <div class="brand footer-brand"><span class="brand-mark">바</span><span><strong>바른구매</strong><small>하도급법 학습센터</small></span></div>
+    <p>사내 교육 및 업무 참고용 자료입니다. 구체적인 거래 판단은 최신 법령과 법무·컴플라이언스 검토를 따르세요.</p>
+    <span>법령 기준일 2026. 09. 03.</span>
+  </footer>
+  <script src="case-data.js"></script>
+  <script src="site-config.js"></script>
+  <script src="law-updates.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

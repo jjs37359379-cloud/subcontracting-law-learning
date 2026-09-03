@@ -1,0 +1,15 @@
+{
+  "name": "fairbuy-law-learning",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "law:check": "node scripts/check-law-updates.mjs",
+    "mail:preview": "node scripts/send-test-email.mjs --preview-only",
+    "mail:test": "node --env-file-if-exists=.env scripts/send-test-email.mjs",
+    "mail:send": "node scripts/send-test-email.mjs --send-live",
+    "cases:update": "node scripts/collect-ftc-cases.mjs"
+  },
+  "dependencies": {
+    "nodemailer": "^9.1.1"
+  }
+}

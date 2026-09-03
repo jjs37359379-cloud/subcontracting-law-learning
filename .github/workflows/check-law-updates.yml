@@ -1,0 +1,58 @@
+name: 하도급 법령 변경 확인
+
+on:
+  schedule:
+    - cron: "0 23 * * 0-4" # 한국시간 월~금 오전 08:00 (UTC 전날 23:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: law-update-monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 법령 원문 비교 및 교육자료 데이터 생성
+        id: law-check
+        env:
+          LAW_API_OC: ${{ secrets.LAW_API_OC }}
+        run: npm run law:check
+      - name: PDF용 Chrome 준비
+        if: steps.law-check.outputs.updated == 'true'
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v1
+      - name: 최신 교육자료 PDF 생성
+        if: steps.law-check.outputs.updated == 'true'
+        run: |
+          "${{ steps.setup-chrome.outputs.chrome-path }}" --headless=new --no-sandbox --disable-gpu --no-pdf-header-footer --print-to-pdf="$GITHUB_WORKSPACE/assets/하도급법_신입구매담당자_교육자료.pdf" "file://$GITHUB_WORKSPACE/print-guide.html"
+      - name: 변경 이력 반영
+        if: steps.law-check.outputs.updated == 'true'
+        run: |
+          git config user.name "fairbuy-law-bot"
+          git config user.email "fairbuy-law-bot@users.noreply.github.com"
+          git add data/law-state.json law-updates.js law-updates.json assets/하도급법_신입구매담당자_교육자료.pdf
+          git commit -m "chore: 하도급 관련 법령 상태 업데이트"
+          git push
+      - name: Gmail 변경 알림 발송
+        if: steps.law-check.outputs.changed == 'true'
+        env:
+          SMTP_HOST: smtp.gmail.com
+          SMTP_PORT: 465
+          SMTP_SECURE: true
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          TRAINING_SITE_URL: ${{ vars.TRAINING_SITE_URL }}
+          TRAINING_PDF_URL: ${{ vars.TRAINING_PDF_URL }}
+        run: npm run mail:send
