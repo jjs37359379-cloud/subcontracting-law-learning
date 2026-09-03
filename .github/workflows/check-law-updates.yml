@@ -26,6 +26,8 @@ jobs:
         id: law-check
         env:
           LAW_API_OC: ${{ secrets.LAW_API_OC }}
+          # 국가법령정보센터는 GitHub 해외 실행기의 HTTPS 연결을 차단하므로 공개 test 값에만 HTTP를 사용합니다.
+          LAW_API_ORIGIN: http://www.law.go.kr
         run: npm run law:check
       - name: PDF용 Chrome 준비
         if: steps.law-check.outputs.updated == 'true'

@@ -12,9 +12,13 @@ const sitePath = path.join(root, "law-updates.js");
 const siteJsonPath = path.join(root, "law-updates.json");
 const pendingEmailPath = path.join(root, "data", "pending-law-email.json");
 const apiOc = process.env.LAW_API_OC;
+const apiOrigin = process.env.LAW_API_ORIGIN || "https://law.go.kr";
 const now = new Date().toISOString();
 
 if (!apiOc) throw new Error("LAW_API_OC가 없습니다. 국가법령정보 공동활용 인증값을 환경변수로 설정하세요.");
+if (apiOrigin.startsWith("http:") && apiOc !== "test") {
+  throw new Error("HTTP 법령 API는 공개 테스트 인증값에서만 허용됩니다. 정식 인증값은 HTTPS 환경에서 사용하세요.");
+}
 
 const previousState = fs.existsSync(statePath)
   ? JSON.parse(fs.readFileSync(statePath, "utf8"))
@@ -89,7 +93,7 @@ function decodeHtml(value) {
 
 async function fetchRevisionReason(mst) {
   try {
-    const url = new URL("https://law.go.kr/LSW/lsRvsDocInfoR.do");
+    const url = new URL("/LSW/lsRvsDocInfoR.do", apiOrigin);
     url.search = new URLSearchParams({ lsiSeq: mst, chrClsCd: "010202" });
     const response = await fetch(url, { headers: { "user-agent": "fairbuy-law-monitor/1.0" } });
     if (!response.ok) return "";
@@ -103,7 +107,7 @@ async function fetchRevisionReason(mst) {
 }
 
 async function fetchLawSnapshot(law) {
-  const searchUrl = new URL("https://law.go.kr/DRF/lawSearch.do");
+  const searchUrl = new URL("/DRF/lawSearch.do", apiOrigin);
   searchUrl.search = new URLSearchParams({ OC: apiOc, target: "law", type: "JSON", query: law.name, display: "100" });
   const searchData = await fetchJson(searchUrl);
   const entries = collectLawEntries(searchData);
@@ -112,7 +116,7 @@ async function fetchLawSnapshot(law) {
   if (!match) throw new Error(`법령 검색 결과에서 정확한 이름을 찾지 못했습니다: ${law.name}`);
 
   const mst = String(match["법령일련번호"]);
-  const detailUrl = new URL("https://law.go.kr/DRF/lawService.do");
+  const detailUrl = new URL("/DRF/lawService.do", apiOrigin);
   detailUrl.search = new URLSearchParams({ OC: apiOc, target: "law", type: "JSON", MST: mst });
   const detail = await fetchJson(detailUrl);
   const articles = collectArticles(detail);
