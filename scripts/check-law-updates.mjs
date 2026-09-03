@@ -89,7 +89,7 @@ function decodeHtml(value) {
 
 async function fetchRevisionReason(mst) {
   try {
-    const url = new URL("https://www.law.go.kr/LSW/lsRvsDocInfoR.do");
+    const url = new URL("https://law.go.kr/LSW/lsRvsDocInfoR.do");
     url.search = new URLSearchParams({ lsiSeq: mst, chrClsCd: "010202" });
     const response = await fetch(url, { headers: { "user-agent": "fairbuy-law-monitor/1.0" } });
     if (!response.ok) return "";
@@ -103,7 +103,7 @@ async function fetchRevisionReason(mst) {
 }
 
 async function fetchLawSnapshot(law) {
-  const searchUrl = new URL("https://www.law.go.kr/DRF/lawSearch.do");
+  const searchUrl = new URL("https://law.go.kr/DRF/lawSearch.do");
   searchUrl.search = new URLSearchParams({ OC: apiOc, target: "law", type: "JSON", query: law.name, display: "100" });
   const searchData = await fetchJson(searchUrl);
   const entries = collectLawEntries(searchData);
@@ -112,7 +112,7 @@ async function fetchLawSnapshot(law) {
   if (!match) throw new Error(`법령 검색 결과에서 정확한 이름을 찾지 못했습니다: ${law.name}`);
 
   const mst = String(match["법령일련번호"]);
-  const detailUrl = new URL("https://www.law.go.kr/DRF/lawService.do");
+  const detailUrl = new URL("https://law.go.kr/DRF/lawService.do");
   detailUrl.search = new URLSearchParams({ OC: apiOc, target: "law", type: "JSON", MST: mst });
   const detail = await fetchJson(detailUrl);
   const articles = collectArticles(detail);
